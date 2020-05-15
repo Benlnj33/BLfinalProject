@@ -2,14 +2,12 @@ CREATE DATABASE citiesData;
 use citiesData;
 
 CREATE TABLE players (
-    'id' int AUTO_INCREMENT,
     `Name` VARCHAR(19) CHARACTER SET utf8,
     `Team` VARCHAR(6) CHARACTER SET utf8,
     `Position` VARCHAR(20) CHARACTER SET utf8,
     `Height_in` INT,
     `Weight_lbs` VARCHAR(4) CHARACTER SET utf8,
     `Age` NUMERIC(4, 2)
-     PRIMARY KEY ('id')
 
 );
 INSERT INTO players VALUES

@@ -88,7 +88,7 @@ def api_browse() -> str:
     return resp
 
 
-@app.route('/api/v1/cities/<int:player_id>', methods=['GET'])
+@app.route('/api/v1/players/<int:player_id>', methods=['GET'])
 def api_retrieve(player_id) -> str:
     cursor = mysql.get_db().cursor()
     cursor.execute('SELECT * FROM players WHERE id=%s', player_id)
