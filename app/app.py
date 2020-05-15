@@ -44,27 +44,27 @@ def form_edit_get(player_id):
 @app.route('/edit/<int:player_id>', methods=['POST'])
 def form_update_post(player_id):
     cursor = mysql.get_db().cursor()
-    inputData = (request.form.get('fldName'), request.form.get('fldLat'), request.form.get('fldLong'),
-                 request.form.get('fldCountry'), request.form.get('fldAbbreviation'),
-                 request.form.get('fldCapitalStatus'), request.form.get('fldPopulation'), player_id)
+    inputData = (request.form.get('Name'), request.form.get('Team'), request.form.get('Position'),
+                 request.form.get('Height_in'), request.form.get('Weight_lbs'),
+                 request.form.get('Age'), player_id)
     sql_update_query = """UPDATE players t SET t.Name = %s, t.Team = %s, t.Position = %s, t.height_inches = 
     %s, t.weight_lbs = %s, t.Age = %s """
     cursor.execute(sql_update_query, inputData)
     mysql.get_db().commit()
     return redirect("/", code=302)
 
-@app.route('/cities/new', methods=['GET'])
+@app.route('/players/new', methods=['GET'])
 def form_insert_get():
     return render_template('new.html', title='New Player Form')
 
 
-@app.route('/cities/new', methods=['POST'])
+@app.route('/players/new', methods=['POST'])
 def form_insert_post():
     cursor = mysql.get_db().cursor()
-    inputData = (request.form.get('fldName'), request.form.get('fldLat'), request.form.get('fldLong'),
-                 request.form.get('fldCountry'), request.form.get('fldAbbreviation'),
-                 request.form.get('fldCapitalStatus'), request.form.get('fldPopulation'))
-    sql_insert_query = """INSERT INTO tblCitiesImport (fldName,fldLat,fldLong,fldCountry,fldAbbreviation,fldCapitalStatus,fldPopulation) VALUES (%s, %s,%s, %s,%s, %s,%s) """
+    inputData = (request.form.get('Name'), request.form.get('Team'), request.form.get('Position'),
+                 request.form.get('Height_in'), request.form.get('Weight_lbs'),
+                 request.form.get('Age'), player_id)
+    sql_insert_query = """INSERT INTO players (Name,Team,Position,Height_in,Weight_lbs,Age,) VALUES (%s, %s,%s, %s,%s, %s) """
     cursor.execute(sql_insert_query, inputData)
     mysql.get_db().commit()
     return redirect("/", code=302)
@@ -78,7 +78,7 @@ def form_delete_post(player_id):
     return redirect("/", code=302)
 
 
-@app.route('/api/v1/cities', methods=['GET'])
+@app.route('/api/v1/players', methods=['GET'])
 def api_browse() -> str:
     cursor = mysql.get_db().cursor()
     cursor.execute('SELECT * FROM players')
@@ -98,19 +98,19 @@ def api_retrieve(player_id) -> str:
     return resp
 
 
-@app.route('/api/v1/cities/', methods=['POST'])
+@app.route('/api/v1/players/', methods=['POST'])
 def api_add() -> str:
     resp = Response(status=201, mimetype='application/json')
     return resp
 
 
-@app.route('/api/v1/cities/<int:player_id>', methods=['PUT'])
+@app.route('/api/v1/players/<int:player_id>', methods=['PUT'])
 def api_edit(player_id) -> str:
     resp = Response(status=201, mimetype='application/json')
     return resp
 
 
-@app.route('/api/cities/<int:player_id>', methods=['DELETE'])
+@app.route('/api/players/<int:player_id>', methods=['DELETE'])
 def api_delete(player_id) -> str:
     resp = Response(status=210, mimetype='application/json')
     return resp
