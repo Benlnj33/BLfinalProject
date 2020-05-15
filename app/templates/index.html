@@ -14,13 +14,13 @@
     <tbody>
     {% for player in players %}
     <tr>
-        <td><a href="view/{{player.id}}">{{ player.fldName }}</a></td>
+        <td><a href="view/{{player.id}}">{{ player.players }}</a></td>
         <td>{{ player.Name }}</td>
         <td>{{ player.Team }}</td>
-        <td>{{ Player.position}}</td>
-        <td>{{ Player.Height_in }}</td>
-        <td>{{ Player.Weight_lbs }}</td>
-        <td>{{ Player.Age }}</td>
+        <td>{{ player.position}}</td>
+        <td>{{ player.Height_in }}</td>
+        <td>{{ player.Weight_lbs }}</td>
+        <td>{{ player.Age }}</td>
     </tr>
     {% endfor %}
     </tbody>
