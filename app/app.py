@@ -25,16 +25,16 @@ def index():
     return render_template('index.html', title='Home', user=user, players=result)
 
 
-@app.route('/view/<int:city_id>', methods=['GET'])
-def record_view(city_id):
+@app.route('/view/<int:player_id>', methods=['GET'])
+def record_view(player_id):
     cursor = mysql.get_db().cursor()
-    cursor.execute('SELECT * FROM players WHERE id=%s', city_id)
+    cursor.execute('SELECT * FROM players WHERE id=%s', player_id)
     result = cursor.fetchall()
     return render_template('view.html', title='View Form', player=result[0])
 
 
 @app.route('/edit/<int:player_id>', methods=['GET'])
-def form_edit_get(city_id):
+def form_edit_get(player_id):
     cursor = mysql.get_db().cursor()
     cursor.execute('SELECT * FROM players WHERE id=%s', player_id)
     result = cursor.fetchall()
@@ -46,7 +46,7 @@ def form_update_post(player_id):
     cursor = mysql.get_db().cursor()
     inputData = (request.form.get('fldName'), request.form.get('fldLat'), request.form.get('fldLong'),
                  request.form.get('fldCountry'), request.form.get('fldAbbreviation'),
-                 request.form.get('fldCapitalStatus'), request.form.get('fldPopulation'), city_id)
+                 request.form.get('fldCapitalStatus'), request.form.get('fldPopulation'), player_id)
     sql_update_query = """UPDATE players t SET t.Name = %s, t.Team = %s, t.Position = %s, t.height_inches = 
     %s, t.weight_lbs = %s, t.Age = %s """
     cursor.execute(sql_update_query, inputData)
@@ -69,11 +69,11 @@ def form_insert_post():
     mysql.get_db().commit()
     return redirect("/", code=302)
 
-@app.route('/delete/<int:city_id>', methods=['POST'])
-def form_delete_post(city_id):
+@app.route('/delete/<int:player_id>', methods=['POST'])
+def form_delete_post(player_id):
     cursor = mysql.get_db().cursor()
-    sql_delete_query = """DELETE FROM tblCitiesImport WHERE id = %s """
-    cursor.execute(sql_delete_query, city_id)
+    sql_delete_query = """DELETE FROM players WHERE id = %s """
+    cursor.execute(sql_delete_query, player_id)
     mysql.get_db().commit()
     return redirect("/", code=302)
 
@@ -81,17 +81,17 @@ def form_delete_post(city_id):
 @app.route('/api/v1/cities', methods=['GET'])
 def api_browse() -> str:
     cursor = mysql.get_db().cursor()
-    cursor.execute('SELECT * FROM tblCitiesImport')
+    cursor.execute('SELECT * FROM players')
     result = cursor.fetchall()
     json_result = json.dumps(result);
     resp = Response(json_result, status=200, mimetype='application/json')
     return resp
 
 
-@app.route('/api/v1/cities/<int:city_id>', methods=['GET'])
-def api_retrieve(city_id) -> str:
+@app.route('/api/v1/cities/<int:player_id>', methods=['GET'])
+def api_retrieve(player_id) -> str:
     cursor = mysql.get_db().cursor()
-    cursor.execute('SELECT * FROM tblCitiesImport WHERE id=%s', city_id)
+    cursor.execute('SELECT * FROM players WHERE id=%s', player_id)
     result = cursor.fetchall()
     json_result = json.dumps(result);
     resp = Response(json_result, status=200, mimetype='application/json')
@@ -104,14 +104,14 @@ def api_add() -> str:
     return resp
 
 
-@app.route('/api/v1/cities/<int:city_id>', methods=['PUT'])
-def api_edit(city_id) -> str:
+@app.route('/api/v1/cities/<int:player_id>', methods=['PUT'])
+def api_edit(player_id) -> str:
     resp = Response(status=201, mimetype='application/json')
     return resp
 
 
-@app.route('/api/cities/<int:city_id>', methods=['DELETE'])
-def api_delete(city_id) -> str:
+@app.route('/api/cities/<int:player_id>', methods=['DELETE'])
+def api_delete(player_id) -> str:
     resp = Response(status=210, mimetype='application/json')
     return resp
 
