@@ -47,7 +47,7 @@ def form_update_post(player_id):
     inputData = (request.form.get('Name'), request.form.get('Team'), request.form.get('Position'),
                  request.form.get('Height_in'), request.form.get('Weight_lbs'),
                  request.form.get('Age'), player_id)
-    sql_update_query = """UPDATE players t SET t.Name = %s, t.Team = %s, t.Position = %s, t.height_inches = 
+    sql_update_query = """UPDATE players t SET t.Name = %s, t.Team = %s, t.Position = %s, t.height_in = 
     %s, t.weight_lbs = %s, t.Age = %s """
     cursor.execute(sql_update_query, inputData)
     mysql.get_db().commit()

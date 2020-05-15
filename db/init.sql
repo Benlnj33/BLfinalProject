@@ -5,7 +5,7 @@ CREATE TABLE players (
     `Name` VARCHAR(19) CHARACTER SET utf8,
     `Team` VARCHAR(6) CHARACTER SET utf8,
     `Position` VARCHAR(20) CHARACTER SET utf8,
-    `Height_inches` INT,
+    `Height_in` INT,
     `Weight_lbs` VARCHAR(4) CHARACTER SET utf8,
     `Age` NUMERIC(4, 2)
 );
